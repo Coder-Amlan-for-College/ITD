@@ -430,5 +430,25 @@ mysql> SELECT (5+POWER(8,9));
 
 .
 k) Find out the square root of 6464312.
+
+mysql> SELECT SQRT(6464312);
++-------------------+
+| SQRT(6464312)     |
++-------------------+
+| 2542.501130776543 |
++-------------------+
+1 row in set (0.00 sec)
+
+
 l) Display the string “HELLO ITER” in lower case with a column heading lower case.
+
+mysql> SELECT LOWER('HELLO ITER') AS 'lower case';
++------------+
+| lower case |
++------------+
+| hello iter |
++------------+
+1 row in set (0.00 sec)
+
+
 
