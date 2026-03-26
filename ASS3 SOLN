@@ -296,4 +296,139 @@ mysql> SELECT MAX(BALANCE) FROM CUSTOMER_ACCOUNT WHERE ACC_TYPE='Savings';
 1 row in set (0.00 sec)
 
 O)
-P)
+mysql> SELECT TRANS_TYPE, SUM(TRANS_AMOUNT) AS TOTAL FROM BANK_TRANSACTION GROUP BY(TRANS_TYPE) ORDER BY(TOTAL) DESC LIMIT 1;
++------------+-------+
+| TRANS_TYPE | TOTAL |
++------------+-------+
+| Deposit    | 22000 |
++------------+-------+
+1 row in set (0.00 sec)
+
+//ANOTHER SOLN
+mysql> SELECT TRANS_TYPE, SUM(TRANS_AMOUNT) AS TOTAL FROM 
+    -> BANK_TRANSACTION GROUP BY TRANS_TYPE
+    -> HAVING SUM(TRANS_AMOUNT)>=ALL(SELECT SUM(TRANS_AMOUNT) FROM BANK_TRANSACTION GROUP BY TRANS_TYPE);
++------------+-------+
+| TRANS_TYPE | TOTAL |
++------------+-------+
+| Deposit    | 22000 |
++------------+-------+
+1 row in set (0.00 sec)
+
+
+P)mysql> SELECT ACC_TYPE, SUM(BALANCE) AS TOTAL , AVG(BALANCE) AS AVERAGE FROM CUSTOMER_ACCOUNT GROUP BY ACC_TYPE HAVING TOTAL > ALL(SELECT AVG(BALANCE) FROM CUSTOMER_ACCOUNT GROUP BY ACC_TYPE);
++----------+--------+------------+
+| ACC_TYPE | TOTAL  | AVERAGE    |
++----------+--------+------------+
+| Savings  | 127490 | 31872.5000 |
++----------+--------+------------+
+1 row in set (0.00 sec)
+
+
+3. Write the SQL Expressions for the following queries using suitable SQL scalar
+function.
+a) Display 2nd- 6th characters of your name.
+mysql> SELECT SUBSTR('AMLANANSHUMANNAYAK',2,5);
++----------------------------------+
+| SUBSTR('AMLANANSHUMANNAYAK',2,5) |
++----------------------------------+
+| MLANA                            |
++----------------------------------+
+1 row in set (0.00 sec)
+
+
+b) Find length of your full university name.
+mysql> SELECT LENGTH('SIKSHA O ANUSANDHAN') AS LENGTH;
++--------+
+| LENGTH |
++--------+
+|     19 |
++--------+
+1 row in set (0.00 sec)
+
+
+c) Display all the customer names in upper case.
+mysql> SELECT UPPER(CUST_NAME) AS NAMES FROM CUSTOMER;
++--------------+
+| NAMES        |
++--------------+
+| ANKIT KUMAR  |
+| ANJALI VERMA |
+| SURESH PATEL |
+| NEHA SHARMA  |
++--------------+
+8 rows in set (0.00 sec)
+
+d) Display the account type of each customer as a two letter code.
+mysql> SELECT SUBSTR(ACC_TYPE,1,2) FROM CUSTOMER_ACCOUNT;
++----------------------+
+| SUBSTR(ACC_TYPE,1,2) |
++----------------------+
+| Sa                   |
+| Sa                   |
+| Sa                   |
+| Sa                   |
+| Cu                   |
++----------------------+
+5 rows in set (0.01 sec)
+
+e) Display the month and year of the transaction perform by each customer.
+mysql> SELECT MONTH(TRANS_DATE) AS MONTH, YEAR(TRANS_DATE) AS YEAR FROM BANK_TRANSACTION;
++-------+------+
+| MONTH | YEAR |
++-------+------+
+|     1 | 2025 |
+|     1 | 2025 |
+|    10 | 2025 |
+|     1 | 2024 |
+|     3 | 2025 |
++-------+------+
+5 rows in set (0.00 sec)
+
+
+f) Display the transaction date of each customer in dd/mm/yyyyy format.
+mysql> SELECT DATE_FORMAT(TRANS_DATE,'%d/%m/%Y') AS DATE FROM BANK_TRANSACTION;
++------------+
+| DATE       |
++------------+
+| 10/01/2025 |
+| 12/01/2025 |
+| 15/10/2025 |
+| 18/01/2024 |
+| 20/03/2025 |
++------------+
+5 rows in set (0.01 sec)
+
+g) To calculate the exact age of each transaction relative to the current date in term of years,months and days.
+
+h) Display the date corresponding to 15 days after today's date.
+mysql> SELECT ADDDATE(CURRENT_DATE,INTERVAL 15 DAY) AS 'AFTER 15 DAYS';
++---------------+
+| AFTER 15 DAYS |
++---------------+
+| 2026-04-10    |
++---------------+
+1 row in set (0.00 sec)
+
+i) Display the value 94204.27348 truncated up to 2 digits after decimal point.
+mysql> SELECT TRUNCATE(94204.27348,2);
++-------------------------+
+| TRUNCATE(94204.27348,2) |
++-------------------------+
+|                94204.27 |
++-------------------------+
+1 row in set (0.00 sec)
+
+j) Display the value of the expression 5 + 8^9
+mysql> SELECT (5+POWER(8,9));
++----------------+
+| (5+POWER(8,9)) |
++----------------+
+|      134217733 |
++----------------+
+1 row in set (0.00 sec)
+
+.
+k) Find out the square root of 6464312.
+l) Display the string “HELLO ITER” in lower case with a column heading lower case.
+
